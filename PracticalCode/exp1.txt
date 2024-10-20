@@ -1,0 +1,27 @@
+EXP 1) Write a program to find the largest number in an array 
+of integers Analyze its time and space complexity.
+
+#include <iostream>
+#include <vector>
+#include <limits>
+
+int findLargestNumber(const std::vector<int>& arr) {
+    if (arr.empty()) {
+        return std::numeric_limits<int>::min(); // Return minimum int if the array is empty
+    }
+
+    int largest = arr[0]; // Assume the first number is the largest
+    for (const int& num : arr) {
+        if (num > largest) {
+            largest = num; // Update largest if current number is greater
+        }
+    }
+    return largest;
+}
+
+int main() {
+    std::vector<int> numbers = {3, 1, 4, 1, 5, 9, 2, 6, 5};
+    int largestNumber = findLargestNumber(numbers);
+    std::cout << "The largest number is: " << largestNumber << std::endl;
+    return 0;
+}

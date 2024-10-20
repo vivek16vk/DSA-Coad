@@ -1,0 +1,75 @@
+EXP 6) Write a program to sort the elements using
+1) Bubble Sort
+2) Insertion Sort
+3) Selection Sort
+
+
+#include <iostream>
+#include <vector>
+
+void bubbleSort(std::vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            if (arr[j] > arr[j + 1]) {
+                std::swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+}
+
+void insertionSort(std::vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 1; i < n; ++i) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            --j;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+void selectionSort(std::vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 0; i < n - 1; ++i) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; ++j) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        std::swap(arr[i], arr[minIndex]);
+    }
+}
+
+void printArray(const std::vector<int>& arr) {
+    for (int num : arr) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    std::vector<int> arr1 = {64, 34, 25, 12, 22, 11, 90};
+    std::vector<int> arr2 = arr1; // Copy for insertion sort
+    std::vector<int> arr3 = arr1; // Copy for selection sort
+
+    std::cout << "Original array: ";
+    printArray(arr1);
+
+    bubbleSort(arr1);
+    std::cout << "Sorted array using Bubble Sort: ";
+    printArray(arr1);
+
+    insertionSort(arr2);
+    std::cout << "Sorted array using Insertion Sort: ";
+    printArray(arr2);
+
+    selectionSort(arr3);
+    std::cout << "Sorted array using Selection Sort: ";
+    printArray(arr3);
+
+    return 0;
+}

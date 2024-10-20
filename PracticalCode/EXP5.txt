@@ -1,0 +1,62 @@
+EXP 5) Write a program to search for an element in an array 
+using linear search and binary search. Compare their 
+efficiencies...
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <chrono>
+
+using namespace std;
+
+// Function for linear search
+int linearSearch(const vector<int>& arr, int target) {
+    for (size_t i = 0; i < arr.size(); ++i) {
+        if (arr[i] == target) {
+            return i; // Return index if found
+        }
+    }
+    return -1; // Return -1 if not found
+}
+
+// Function for binary search
+int binarySearch(const vector<int>& arr, int target) {
+    int left = 0;
+    int right = arr.size() - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target) {
+            return mid; // Return index if found
+        } else if (arr[mid] < target) {
+            left = mid + 1; // Search in the right half
+        } else {
+            right = mid - 1; // Search in the left half
+        }
+    }
+    return -1; // Return -1 if not found
+}
+
+int main() {
+    vector<int> arr = {3, 5, 1, 4, 2, 6, 8, 7}; // Unsorted array
+    int target = 6;
+
+    // Linear Search
+    auto start = chrono::high_resolution_clock::now();
+    int linearIndex = linearSearch(arr, target);
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double> linearDuration = end - start;
+
+    // Binary Search (requires sorted array)
+    sort(arr.begin(), arr.end()); // Sort the array for binary search
+    start = chrono::high_resolution_clock::now();
+    int binaryIndex = binarySearch(arr, target);
+    end = chrono::high_resolution_clock::now();
+    chrono::duration<double> binaryDuration = end - start;
+
+    // Output results
+    cout << "Linear Search Index: " << linearIndex << ", Time: " << linearDuration.count() << " seconds" << endl;
+    cout << "Binary Search Index: " << binaryIndex << ", Time: " << binaryDuration.count() << " seconds" << endl;
+
+    return 0;
+}

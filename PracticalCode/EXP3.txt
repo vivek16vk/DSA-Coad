@@ -1,0 +1,175 @@
+EXP 3) Implement a linear queue data structure using arrays 
+and link list.
+
+
+Queue Implementation using Arrays.
+
+#include <iostream>
+#define MAX 100 // Maximum size of the queue
+
+class Queue {
+private:
+    int arr[MAX];
+    int front, rear;
+
+public:
+    Queue() {
+        front = -1;
+        rear = -1;
+    }
+
+    bool isEmpty() {
+        return front == -1;
+    }
+
+    bool isFull() {
+        return rear == MAX - 1;
+    }
+
+    void enqueue(int value) {
+        if (isFull()) {
+            std::cout << "Queue is full!" << std::endl;
+            return;
+        }
+        if (isEmpty()) {
+            front = 0;
+        }
+        arr[++rear] = value;
+    }
+
+    void dequeue() {
+        if (isEmpty()) {
+            std::cout << "Queue is empty!" << std::endl;
+            return;
+        }
+        if (front >= rear) {
+            front = rear = -1; // Reset the queue
+        } else {
+            front++;
+        }
+    }
+
+    int peek() {
+        if (isEmpty()) {
+            std::cout << "Queue is empty!" << std::endl;
+            return -1;
+        }
+        return arr[front];
+    }
+
+    void display() {
+        if (isEmpty()) {
+            std::cout << "Queue is empty!" << std::endl;
+            return;
+        }
+        for (int i = front; i <= rear; i++) {
+            std::cout << arr[i] << " ";
+        }
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    Queue q;
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    q.display(); // Output: 10 20 30
+
+    q.dequeue();
+    q.display(); // Output: 20 30
+
+    std::cout << "Front element: " << q.peek() << std::endl; // Output: 20
+
+    return 0;
+}
+
+
+Queue Implementation using Linked List
+
+#include <iostream>
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int value) : data(value), next(nullptr) {}
+};
+
+class Queue {
+private:
+    Node* front;
+    Node* rear;
+
+public:
+    Queue() : front(nullptr), rear(nullptr) {}
+
+    bool isEmpty() {
+        return front == nullptr;
+    }
+
+    void enqueue(int value) {
+        Node* newNode = new Node(value);
+        if (isEmpty()) {
+            front = rear = newNode;
+        } else {
+            rear->next = newNode;
+            rear = newNode;
+        }
+    }
+
+    void dequeue() {
+        if (isEmpty()) {
+            std::cout << "Queue is empty!" << std::endl;
+            return;
+        }
+        Node* temp = front;
+        front = front->next;
+        if (front == nullptr) {
+            rear = nullptr; // Queue becomes empty
+        }
+        delete temp;
+    }
+
+    int peek() {
+        if (isEmpty()) {
+            std::cout << "Queue is empty!" << std::endl;
+            return -1;
+        }
+        return front->data;
+    }
+
+    void display() {
+        if (isEmpty()) {
+            std::cout << "Queue is empty!" << std::endl;
+            return;
+        }
+        Node* temp = front;
+        while (temp != nullptr) {
+            std::cout << temp->data << " ";
+            temp = temp->next;
+        }
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    Queue q;
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    q.display(); // Output: 10 20 30
+
+    q.dequeue();
+    q.display(); // Output: 20 30
+
+    std::cout << "Front element: " << q.peek() << std::endl; // Output: 20
+
+    return 0;
+}
+
+
+
+
+
